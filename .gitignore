@@ -1,0 +1,18 @@
+### Hypernode-Docker OSX Development environment
+
+## IDE & env
+/.idea
+/*.iml
+
+## File not for VCS
+/*.sql*
+/*.*.gz
+/*.json
+/*.csv
+
+## Application
+/magento/*
+!/magento/.gitkeep
+
+## Others
+/Resources
