@@ -22,5 +22,8 @@
 /env/backups/*
 !/env/backups/.gitkeep
 
+/env/shared/*
+!/env/shared/.gitkeep
+
 ## Others
 /Resources
