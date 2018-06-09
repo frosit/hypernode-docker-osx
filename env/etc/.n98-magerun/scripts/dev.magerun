@@ -1,0 +1,15 @@
+# Enable settings for development
+magerun dev:symlinks --on --global
+magerun dev:log --global --on
+dev:merge-css --off --global
+dev:merge-js --off --global
+design:demo-notice --on --global
+config:set design/head/default_robots NOINDEX,NOFOLLOW
+config:set admin/url/custom_path admin
+config:delete web/secure/use_in_frontend --all
+config:delete web/secure/use_in_adminhtml --all
+config:set payment/checkmo/active 1
+! rm -Rf ${magento.root}/var/session/*
+! rm -Rf ${magento.root}/var/cache/*
+! rm -Rf ${magento.root}/var/report/*
+! rm -Rf ${magento.root}/var/log/*

@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  hypernode:
+    build:
+      context: ./../
+      dockerfile: ./env/hypernode/Dockerfile
+      args:
+        - AUTH_APP_PWD=${AUTH_APP_PWD}
+        - AUTH_ROOT_PWD=${AUTH_ROOT_PWD}
+    image: '${COMPOSE_PROJECT_NAME}-hypernode:${COMPOSE_BUILD_TAG}'
+    ports:
+      - '${COMPOSE_PORT_SSH}:22'
+      - '${COMPOSE_PORT_WEB}:80'
+      - '${COMPOSE_PORT_MYSQL}:3306'
+    volumes:
+      - './bin:/data/web/bin:delegated'
+      - './backups:/data/web/backups:cached'

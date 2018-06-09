@@ -1,0 +1,19 @@
+{
+  "github-oauth": {
+    "github.com": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  "http-basic": {
+    "repo.magento.com": {
+      "username": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+  },
+  "bitbucket-oauth": {
+    "bitbucket.org": {
+      "consumer-key": "xxxxxxxxxxxxxxxx",
+      "consumer-secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "access-token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxx",
+      "access-token-expiration": xxxxxxxxxxxx
+    }
+  }
+}

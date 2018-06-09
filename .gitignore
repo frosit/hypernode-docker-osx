@@ -4,6 +4,11 @@
 /.idea
 /*.iml
 
+
+/.env
+/env/etc/.composer/auth.json
+
+
 ## File not for VCS
 /*.sql*
 /*.*.gz

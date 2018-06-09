@@ -1,0 +1,34 @@
+commands:
+  N98\Magento\Command\Installer\InstallCommand:
+    installation:
+      defaults:
+        currency: EUR
+        locale: nl_NL
+        timezone: UTC
+        use_secure: no
+        use_rewrites: yes
+        session_save: files
+        admin_username: admin
+        admin_firstname: Developer
+        admin_lastname: Developer
+        admin_password: developer1122
+        admin_frontname: admin
+        admin_email: developer@hypernode.io
+        encryption_key:
+
+    magento-packages:
+      - name: byte-mag-mirror-latest
+        version: 1.9
+        dist:
+          url: file:///etc/hypernode/defaults/magento-latest.tar.gz
+          type: tar
+        extra:
+          sample-data: byte-sample-data-1.9.1.0
+
+    demo-data-packages:
+      - name: byte-sample-data-1.9.1.0
+        version: 1.9.1.0
+        dist:
+          url: file:///etc/hypernode/defaults/magento-sample-data-1.9.1.0.tar.gz
+          type: tar
+          shasum: 617e0271900772ac8f11e7bb86e29fca0f640562
