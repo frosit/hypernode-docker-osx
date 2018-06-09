@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# DB Exporter
+# ===========
+# @todo optimise variables
+
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Exports Magento database to backups/db as latest backup
 
@@ -18,7 +22,7 @@ exit; fi
 # Variables (@todo finalise variable names afterwards)
 _source=${APP_VM_SOURCE}
 _mversion=${APP_MAGE_VER}
-_backupPath=/data/web/backups/db
+_backupPath=/data/web/shared
 _backupFile=${APP_DB_FILE}
 
 # Resolve correct magerun command based on Mage version

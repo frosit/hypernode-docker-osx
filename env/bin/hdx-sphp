@@ -33,6 +33,7 @@ arg=$1;shift
 
 #######################################
 # List available PHP versions
+# @todo [issue]: current detection is wrong
 #######################################
 function list(){
     local currentversion="`php -r \"error_reporting(0); echo substr(phpversion(), 0, 3);\"`" # @todo find better alternative for this

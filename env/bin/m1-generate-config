@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Creates M1 config
+# =================
+# @todo integrate with import/export db
+# @todo add remove/ overwrite options
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+Generates a local config xml for M1
+
+Usage: $(basename "$0") <dbname> (optional)
+
+This command generates local config xml easily.
+
+Copyright (c) 2018 "FROSIT" Fabio Ros
+Licensed under the MIT license.
+http://frosit.nl
+HELP
+exit; fi
+
+_source=${APP_VM_SOURCE}
+_dbname=${APP_DB_NAME}
+_dbhost=`cat /data/web/.my.cnf  | grep host | awk '{print$3}'`
+_dbuser=`cat /data/web/.my.cnf  | grep user | awk '{print$3}'`
+_dbpass=`cat /data/web/.my.cnf  | grep pass | awk '{print$3}'`
+
+if [ -n ${1+x} ]; then
+    echo -e "Set dbname to ${1}"
+    _dbname=$1
+fi
+
+n98-magerun --root-dir="${_source}" local-config:generate ${_dbhost} ${_dbuser} ${_dbpass} ${_dbname} files admin

@@ -16,10 +16,10 @@ services:
       - '${COMPOSE_PORT_MAILHOG}:8025'
     volumes:
       - './bin:/data/web/bin:delegated'
-      - './backups:/data/web/backups:cached'
+      - './shared:/data/web/shared:cached'
       - app-sync:${APP_VM_SOURCE}:nocopy
 
 volumes:
   app-sync:
     external:
-      name: '${APP_PROJECT_NAME}-app-sync'
+      name: '${COMPOSE_PROJECT_NAME}-app-sync'
