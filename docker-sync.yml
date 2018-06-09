@@ -1,0 +1,8 @@
+version: "2"
+
+options:
+  verbose: true
+syncs:
+  ${APP_PROJECT_NAME}-app-sync:
+    src: '${APP_LOCAL_SOURCE}'
+    sync_userid: '1001'

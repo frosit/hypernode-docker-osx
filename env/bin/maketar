@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Easy tarring with output
+# ========================
+
+if [[ "$1" == "-h" || "$1" == "--help" || ! ${1+x} ]]; then cat <<HELP
+Creates a tar file of specified file/folder
+
+Usage: $(basename "$0") [folder-to-tar] [{save-as}.tar.gz]
+
+This command will tar the file/folder of the first argument.
+It will use the first argument als filename adding .tar.gz
+
+If a second argument is supplied, this will be used as the location/name to save the tar.
+
+Copyright (c) 2018 "FROSIT" Fabio Ros
+Licensed under the MIT license.
+http://frosit.nl
+HELP
+exit; fi
+
+# Check if file or folder exists
+if [[ ! -d ${1} && ! -f ${1} ]]; then
+    echo -e "File or folder ${1} not found."
+    exit;
+fi
+
+dest="${1%%/}.tar.gz"
+if [ ${2+x} ]; then
+    dest="${2}.tar.gz"
+fi
+
+# If already exists, add timestamp
+if [ -f ${dest} ]; then
+    if [ ${2+x} ]; then
+        dest="${2}-$(date '+%d-%m-%Y_%H-%M-%S').tar.gz";
+    else
+        dest="${1}-$(date '+%d-%m-%Y_%H-%M-%S').tar.gz";
+    fi
+fi
+
+tar -cf - ${1} | pv -s $(du -sb ${1} | awk '{print $1}') | gzip > ${dest}

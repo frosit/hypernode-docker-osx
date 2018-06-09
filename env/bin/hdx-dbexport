@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+Exports Magento database to backups/db as latest backup
+
+Usage: $(basename "$0")
+
+This command is meant to make backups while developing, or save your database state before
+You shutdown your docker VM. The dbimport script can reimport your db when you boot later.
+
+Most values are defined in env configuration
+
+Copyright (c) 2018 "FROSIT" Fabio Ros
+Licensed under the MIT license.7
+http://frosit.nl
+HELP
+exit; fi
+
+# Variables (@todo finalise variable names afterwards)
+_source=${APP_VM_SOURCE}
+_mversion=${APP_MAGE_VER}
+_backupPath=/data/web/backups/db
+_backupFile=${APP_DB_FILE}
+
+# Resolve correct magerun command based on Mage version
+_magerun(){
+    if [ $_mversion == 1 ]; then
+        local mr=n98-magerun
+    else
+        local mr=n98-magerun2
+    fi
+
+    ${mr} --root-dir="${_source}" $@
+}
+
+# Export database
+_export(){
+
+    # Create path if not exists
+    if [ ! -d ${_backupPath} ]; then
+        mkdir -p ${_backupPath}
+    fi
+
+    # If file exists
+    local _absFilePath="${_backupPath}/${_backupFile}"
+    if [[ -f "${_absFilePath}" ]]; then
+        echo -e "Found file at ${_absFilePath}, moving it"
+        local _timeSec=$(stat -c %Y ${_absFilePath})
+        mv ${_absFilePath} "${_backupPath}/${_timeSec}-${_backupFile}"
+        gzip "${_backupPath}/${_timeSec}-${_backupFile}"
+    fi
+
+    _magerun db:dump --strip=@stripped "${_absFilePath}"
+}
+
+_export

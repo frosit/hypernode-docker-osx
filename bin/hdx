@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+#   FROSCLI - a bash helper for Guard project dependencies.
+#   ----------------------------------------------------------------------------
+#
+#      ~ Copyright (c) 2018 Fabio Ros
+#
+# ===================================
+BINDIR=$(dirname $0)
+PROJECTDIR=$(realpath "${BINDIR}/..")
+
+VERSION="1.0.0"
+SCRIPT=${0##*/}
+USAGE="\
+ Hypernode-Docker OSX - (v${VERSION})
+
+ Usage: ${SCRIPT} [arg] --[opts]
+
+ Commands:
+    init                        Initialise project
+    shell [user]                Login to shell as user, defaults to app
+
+ Optional arguments:
+    -h, --help                  Show this help menu
+"
+
+# Help function
+help(){
+    echo -e "$USAGE"
+    exit
+}
+
+# Shutdown
+shutdown(){
+    # cleaning perhaps
+    exit
+}
+
+## Call help if no arg or help params
+if [[ "$1" == "-h" || "$1" == "--help" || $# -eq 0 ]]; then
+    help
+fi
+
+# Map first arg to function
+arg=$1;shift
+
+_loadEnv(){
+    if [ ! -f "${PROJECTDIR}/.env" ]; then
+        echo -e "No env file found, run init"
+        exit
+    fi
+    export $(egrep -v '^#' ${PROJECTDIR}/.env | xargs)
+}
+
+#####
+# Create minimal required
+#####
+function init(){
+    echo -e "Creating files"
+
+    if [ ! -f "${PROJECTDIR}/.env" ]; then
+        cp "${PROJECTDIR}/.env.dist" "${PROJECTDIR}/.env"
+    fi
+
+    _loadEnv
+
+    if [ ! -d "${PROJECTDIR}/${APP_LOCAL_SOURCE}" ]; then
+        mkdir -p "${PROJECTDIR}/${APP_LOCAL_SOURCE}"
+    fi
+}
+
+#####
+# Login to VM's bash as user
+#####
+function shell(){
+    _loadEnv
+    local shelluser=$1
+    if [ -z ${1+x} ]; then
+        local shelluser=app
+    fi
+    ssh -i "${PROJECTDIR}/env/etc/.ssh/id_rsa" ${shelluser}@127.0.0.1 -p ${COMPOSE_PORT_SSH}
+}
+
+
+
+
+
+# Execute
+${arg%%/} $@
+
+trap shutdown EXIT

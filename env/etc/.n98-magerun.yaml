@@ -3,18 +3,23 @@ commands:
     installation:
       defaults:
         currency: EUR
-        locale: nl_NL
+        locale: en_US
         timezone: UTC
         use_secure: no
         use_rewrites: yes
         session_save: files
-        admin_username: admin
+        admin_username: developer
         admin_firstname: Developer
         admin_lastname: Developer
         admin_password: developer1122
         admin_frontname: admin
         admin_email: developer@hypernode.io
         encryption_key:
+        dbHost: 127.0.0.1
+        db_port: 3306
+        db_user: app
+        # db_pass: @todo can we load this from .env?
+        # db_name: magento
 
     magento-packages:
       - name: byte-mag-mirror-latest
@@ -32,3 +37,9 @@ commands:
           url: file:///etc/hypernode/defaults/magento-sample-data-1.9.1.0.tar.gz
           type: tar
           shasum: 617e0271900772ac8f11e7bb86e29fca0f640562
+
+  N98\Magento\Command\Database\DumpCommand:
+    table-groups:
+      - id: "minimal"
+        description: "Minimal data"
+        tables: "@development core_url_rewrite catalog_*_flat*"

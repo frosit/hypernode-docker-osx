@@ -13,6 +13,13 @@ services:
       - '${COMPOSE_PORT_SSH}:22'
       - '${COMPOSE_PORT_WEB}:80'
       - '${COMPOSE_PORT_MYSQL}:3306'
+      - '${COMPOSE_PORT_MAILHOG}:8025'
     volumes:
       - './bin:/data/web/bin:delegated'
       - './backups:/data/web/backups:cached'
+      - app-sync:${APP_VM_SOURCE}:nocopy
+
+volumes:
+  app-sync:
+    external:
+      name: '${APP_PROJECT_NAME}-app-sync'

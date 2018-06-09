@@ -12,6 +12,9 @@ RUN cp /data/web/.ssh/authorized_keys /root/.ssh/authorized_keys
 # change passwds
 RUN echo "root:${AUTH_ROOT_PWD}" | chpasswd && echo "app:${AUTH_APP_PWD}" | chpasswd
 
+# Give sudo permissions
+RUN usermod -aG sudo app
+
 # Add env file
 ADD ./.env /data/web/.env
 RUN echo "if [ -f /data/web/.env ]; then export \$(egrep -v '^#' /data/web/.env | xargs); fi" >> /data/web/.bashrc
