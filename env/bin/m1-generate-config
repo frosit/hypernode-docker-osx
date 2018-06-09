@@ -23,7 +23,7 @@ _dbhost=`cat /data/web/.my.cnf  | grep host | awk '{print$3}'`
 _dbuser=`cat /data/web/.my.cnf  | grep user | awk '{print$3}'`
 _dbpass=`cat /data/web/.my.cnf  | grep pass | awk '{print$3}'`
 
-if [ -n ${1+x} ]; then
+if [ ${1+x} ]; then
     echo -e "Set dbname to ${1}"
     _dbname=$1
 fi
