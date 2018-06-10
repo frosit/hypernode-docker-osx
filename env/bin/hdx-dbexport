@@ -20,10 +20,10 @@ HELP
 exit; fi
 
 # Variables (@todo finalise variable names afterwards)
-_source=${APP_VM_SOURCE}
-_mversion=${APP_MAGE_VER}
+_source=${DEST_PATH:-/data/web/public}
+_mversion=${MAGE_VER:-1} # autodetect?
 _backupPath=/data/web/shared
-_backupFile=${APP_DB_FILE}
+_backupFile=${DB_FILE:-latest.sql}
 
 # Resolve correct magerun command based on Mage version
 _magerun(){

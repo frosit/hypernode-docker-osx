@@ -15,11 +15,6 @@ commands:
         admin_frontname: admin
         admin_email: developer@hypernode.io
         encryption_key:
-        dbHost: 127.0.0.1
-        db_port: 3306
-        db_user: app
-        # db_pass: @todo can we load this from .env?
-        # db_name: magento
 
     magento-packages:
       - name: byte-mag-mirror-latest

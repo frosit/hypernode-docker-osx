@@ -3,8 +3,8 @@ version: "2"
 options:
   verbose: true
 syncs:
-  ${COMPOSE_PROJECT_NAME}-app-sync:
-    src: '${APP_LOCAL_SOURCE}'
+  ${PROJECT_NAME}-app-sync:
+    src: '${SOURCE_PATH}'
     sync_userid: '1001'
     sync_excludes: ['var/cache','var/session']
     watch_excludes: ['var/cache','var/session']

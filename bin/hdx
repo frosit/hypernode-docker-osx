@@ -64,8 +64,8 @@ function init(){
 
     _loadEnv
 
-    if [ ! -d "${PROJECTDIR}/${APP_LOCAL_SOURCE}" ]; then
-        mkdir -p "${PROJECTDIR}/${APP_LOCAL_SOURCE}"
+    if [ ! -d "${PROJECTDIR}/${SOURCE_PATH:-./magento}" ]; then
+        mkdir -p "${PROJECTDIR}/${SOURCE_PATH:-./magento}"
     fi
 }
 
@@ -78,7 +78,7 @@ function shell(){
     if [ -z ${1+x} ]; then
         local shelluser=app
     fi
-    ssh -i "${PROJECTDIR}/env/etc/.ssh/id_rsa" ${shelluser}@127.0.0.1 -p ${COMPOSE_PORT_SSH}
+    ssh -i "${PROJECTDIR}/env/etc/.ssh/id_rsa" ${shelluser}@127.0.0.1 -p ${PORT_SSH:-2222}
 }
 
 

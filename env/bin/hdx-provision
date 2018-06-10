@@ -3,7 +3,7 @@
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Provisions your VM
 
-Usage: $(basename "$0")
+Usage: $(basename "$0") -f (force)
 
 This command will perform various actions on boot, it will look for a .hdx-prov file.
 If this file exists, provisioning will be skipped, otherwise executed.
@@ -15,10 +15,18 @@ HELP
 exit; fi
 
 # Exit if provision flag exists
-if [ -f /data/web/.hdx-prov ]; then
+if [[ -f /data/web/.hdx-prov && ${1} != "-f" ]]; then
     exit
 fi
 
+
+
+if [ -d /data/web/.provision ]; then
+    for script in $(ls /data/web/.provision); do
+        source "/data/web/.provision/${script}"
+#        source $(readlink -f $script)
+    done
+fi
 
 
 # Do things

@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# XDebug script
+# =============
+if [[ "$1" == "-h" || "$1" == "--help" || ! ${1+x} ]]; then cat <<HELP
+Manage xDebug
+
+Usage: $(basename "$0") [command]
+
+    install     Install xDebug
+    restart     restart php-fpm and nginx
+    enable      enables xdebug php module
+    disable     disables xdebug php module
+    createini   create xdebug ini file
+
+You are required to give your root password
+
+Copyright (c) 2018 "FROSIT" Fabio Ros
+Licensed under the MIT license.
+http://frosit.nl
+HELP
+exit; fi
+
+
+# Define argument
+arg=$1;shift
+
+# Install xDebug
+function install(){
+    sudo apt install php-xdebug
+}
+
+# Restart PHP-FPM and Nginx
+function restart(){
+    sudo service php7.1-fpm restart
+    sudo service nginx restart
+}
+
+# Enable xDebug
+function enable(){
+    sudo phpenmod -v ALL -s ALL xdebug
+    if [ ! -f /etc/php/7.0/fpm/conf.d/20-xdebug.ini ]; then
+        restart
+        echo -e "xDebug enabled"
+    fi
+}
+
+# disable xDebug
+function disable(){
+    sudo phpdismod -v ALL -s ALL xdebug
+    if [ ! -f /etc/php/7.0/fpm/conf.d/20-xdebug.ini ]; then
+        restart
+        echo -e "xDebug disabled"
+    fi
+}
+
+# Create .user.ini
+function createini(){
+    echo "
+[xdebug]
+xdebug.remote_enable=1
+xdebug.remote_host=127.0.0.1
+xdebug.remote_port=9001
+xdebug.idekey = PHPSTORM
+" > /data/web/public/.user.ini
+
+    echo -e "Ini created under /data/web/public/.user.ini"
+}
+
+${arg%%/} $@

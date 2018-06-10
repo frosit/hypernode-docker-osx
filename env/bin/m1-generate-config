@@ -17,8 +17,8 @@ http://frosit.nl
 HELP
 exit; fi
 
-_source=${APP_VM_SOURCE}
-_dbname=${APP_DB_NAME}
+_source=${DEST_PATH:-/data/web/public}
+_dbname=${DB_NAME:-magento}
 _dbhost=`cat /data/web/.my.cnf  | grep host | awk '{print$3}'`
 _dbuser=`cat /data/web/.my.cnf  | grep user | awk '{print$3}'`
 _dbpass=`cat /data/web/.my.cnf  | grep pass | awk '{print$3}'`
