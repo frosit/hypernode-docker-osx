@@ -3,6 +3,8 @@ Hypernode-Docker OSX Development environment (HDX)
 
 This repository contains a _mac OSX Magento_ development environment for using [hypernode-docker](https://github.com/byteinternet/hypernode-docker).
 
+__EXPERIMENTAL UNFINISHED: don't expect it to work out of the box yet!, it's a POC, docs not up-to-date etc etc__
+
 # Requirements
 
 * [Docker for mac](https://docs.docker.com/docker-for-mac/install/)

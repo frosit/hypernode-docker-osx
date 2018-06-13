@@ -78,7 +78,7 @@ function shell(){
     if [ -z ${1+x} ]; then
         local shelluser=app
     fi
-    ssh -i "${PROJECTDIR}/env/etc/.ssh/id_rsa" ${shelluser}@127.0.0.1 -p ${PORT_SSH:-2222}
+    ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -i "${PROJECTDIR}/env/etc/.ssh/id_rsa" -A ${shelluser}@127.0.0.1 -p ${PORT_SSH:-2222}
 }
 
 

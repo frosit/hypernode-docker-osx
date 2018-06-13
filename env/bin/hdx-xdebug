@@ -31,7 +31,8 @@ function install(){
 
 # Restart PHP-FPM and Nginx
 function restart(){
-    sudo service php7.1-fpm restart
+    local phpVer=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+    sudo service php${phpVer}-fpm restart
     sudo service nginx restart
 }
 

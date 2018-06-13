@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 services:
   hypernode:
@@ -6,20 +6,25 @@ services:
       context: ./../
       dockerfile: ./env/hypernode/Dockerfile
       args:
-        - AUTH_APP_PWD=${AUTH_APP_PWD}
-        - AUTH_ROOT_PWD=${AUTH_ROOT_PWD}
-    image: '${COMPOSE_PROJECT_NAME}-hypernode:${COMPOSE_BUILD_TAG}'
+        - AUTH_APP_PWD=${AUTH_APP_PWD:-app}
+        - AUTH_ROOT_PWD=${AUTH_ROOT_PWD:-root}
+    environment:
+      - SERVICE_ENV=test
+    env_file:
+      - ./../.env
     ports:
-      - '${COMPOSE_PORT_SSH}:22'
-      - '${COMPOSE_PORT_WEB}:80'
-      - '${COMPOSE_PORT_MYSQL}:3306'
-      - '${COMPOSE_PORT_MAILHOG}:8025'
+      - '${PORT_SSH:-2222}:22'
+      - '${PORT_WEB:-8888}:80'
+      - '${MYSQL:-3307}:3306'
+      - '${PORT_MAILHOG:-8025}:8025'
     volumes:
       - './bin:/data/web/bin:delegated'
       - './shared:/data/web/shared:cached'
-      - app-sync:${APP_VM_SOURCE}:nocopy
+      - app-sync:${DEST_PATH:-/data/web/public}:nocopy
+    image: '${PROJECT_NAME:-hdx}-hypernode:${BUILD_TAG:-latest}'
+    container_name: '${PROJECT_NAME:-hdx}-hypernode'
 
 volumes:
   app-sync:
     external:
-      name: '${COMPOSE_PROJECT_NAME}-app-sync'
+      name: '${PROJECT_NAME:-hdx}-app-sync'
